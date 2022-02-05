@@ -1,90 +1,46 @@
-class Department {
-  // private name: string;
-  protected employees: string[] = [];
+// type AddFn = (a: number, b: number) => number;
+interface AddFn {
+  (a: number, b: number): number;
+}
 
-  constructor(private readonly id: string, public name: string) {
-    // this.name = n;
+let add: AddFn;
+
+add = (n1: number, n2: number) => {
+  return n1 + n2;
+};
+
+interface Named {
+  readonly name?: string;
+  outputName?: string;
+}
+
+interface Greetable extends Named {
+  greet(phrase: string): void;
+}
+
+class Person implements Greetable, Named {
+  name?: string;
+  age = 30;
+  // outputName = 'asdf'
+
+  constructor(n?: string) {
+    if (n) {
+      this.name = n;
+    }
   }
 
-  describe(this: Department) {
-    console.log(`Department (${this.id}): ${this.name}`);
-  }
-
-  addEmployee(employee: string) {
-    this.employees.push(employee);
-  }
-
-  printEmployeeInformation() {
-    console.log(this.employees.length);
-    console.log(this.employees);
+  greet(phrase: string) {
+    if (this.name) {
+      console.log(phrase + " " + this.name);
+    } else {
+      console.log("Hi!");
+    }
   }
 }
 
-class ITDepartment extends Department {
-  constructor(id: string, public admins: string[]) {
-    super(id, "IT");
-  }
-}
+let user1: Greetable;
 
-class AccountingDepartment extends Department {
-  private lastReport: string;
+// user1 = new Person("Max");
+user1 = new Person();
 
-  get mostRecentReport() {
-    if (this.lastReport) {
-      return this.lastReport;
-    }
-    throw new Error("No report found.");
-  }
-
-  set mostRecentReport(value: string) {
-    if (!value) {
-      throw new Error("Please pass in a valid value!");
-    }
-    this.addReport(value);
-  }
-
-  constructor(id: string, private reports: string[]) {
-    super(id, "Accounting");
-    this.lastReport = reports[0];
-  }
-
-  addReport(text: string) {
-    this.reports.push(text);
-    this.lastReport = text;
-  }
-
-  printReports() {
-    console.log(this.reports);
-  }
-
-  addEmployee(name: string) {
-    if (name === "Max") {
-      return;
-    }
-    this.employees.push(name);
-  }
-}
-
-const itDep = new ITDepartment("d1", ["max"]);
-console.log(itDep);
-console.log(itDep.admins);
-
-const accounting = new AccountingDepartment("d2", []);
-
-accounting.mostRecentReport = "test lastest report";
-
-accounting.addReport("Somthinge went wrong...");
-accounting.mostRecentReport = "123";
-console.log(accounting.mostRecentReport);
-accounting.printReports();
-accounting.addEmployee("ryan");
-accounting.printEmployeeInformation();
-// const accounting = new Department("1", "Accounting");
-// accounting.describe();
-
-// accounting.addEmployee("max");
-// accounting.addEmployee("manuel");
-
-// // accounting.employees[2] = 'anna'
-
-// accounting.printEmployeeInformation();
+user1.greet("Welcome,");
