@@ -77,3 +77,24 @@ objectStorage.addItem({ name: "ryan" });
 objectStorage.removeItem(maxObj);
 // objectStorage.removeItem({ name: "max" });
 console.log(objectStorage.getItems());
+
+interface CourseGoal {
+  title: string;
+  description: string;
+  completeUntil: Date;
+}
+
+function createCourseGoal(
+  title: string,
+  description: string,
+  date: Date
+): CourseGoal {
+  let courseGoal: Partial<CourseGoal> = {};
+  courseGoal.title = title;
+  courseGoal.description = description;
+  courseGoal.completeUntil = date;
+  return courseGoal as CourseGoal; //type casting
+}
+
+const names1: Readonly<string[]> = ["Max", "Anna"];
+names1.push("Manu");
