@@ -38,4 +38,4 @@ function extractAndConvert<T extends object, U extends keyof T>(
   return `Value: ${obj[key]}`;
 }
 
-extractAndConvert({ nane: "ryan" }, "name");
+extractAndConvert({ name: "ryan" }, "name");
